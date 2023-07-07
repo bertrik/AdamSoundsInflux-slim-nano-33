@@ -1,6 +1,7 @@
-
 #define ASO_VERSION "0.2.4"
 // 0001, 0011, 0014
+
+#include <stdbool.h>
 
 // For the AP
 #include <wdt_samd21.h>
@@ -58,7 +59,7 @@ static int mqttConnectTry = 0; // Count connection attempts
 #endif
 
 uint32_t send_interval_secs = 1; // send interval
-static int in_setup = 0; // flag to check if in setup
+static bool in_setup = false; // flag to check if in setup
 
 
 // create objects   
@@ -117,7 +118,7 @@ void setupwifi() {
     wifiConnectTry++;
     
     if (wifiConnectTry > 3) {
-      if ( in_setup = 1 ) {
+      if ( in_setup ) {
 //        Serial.println(F("Wifi connect in setup mode taking to long, moving to AP mode"));
         WIFI_MODE = WIFI_MODE_AP;
         break;
@@ -131,7 +132,7 @@ void setupwifi() {
     delay(5000);
   }
 
-  if (status = WL_CONNECTED){
+  if (WL_CONNECTED == status){
     // you're connected now, so print out the data:
     WIFI_MODE = WIFI_MODE_CLIENT;
 //    Serial.println(F("You're connected to the network")); 
@@ -204,7 +205,7 @@ void setupMQTT() {
     if (mqttClient.connect(conf.data.MQTT_IP, atoi(conf.data.MQTT_PORT))) {
       //Serial.print(F("step 10"));
 //      Serial.println(F("connected"));
-      if ( in_setup = 1 ) {
+      if ( in_setup ) {
 //        Serial.println(F("Connection established in setup, so restarted, sending out restart info."));
         // assemble message
         restartinfo = "sensor-";
@@ -277,7 +278,7 @@ void setup() {
 
   httpReq.setCallback(callback);
 
-  in_setup = 1; // we are in setup
+  in_setup = true; // we are in setup
 
   // LED off
   pinMode(LED_BUILTIN, OUTPUT);
@@ -337,7 +338,7 @@ void setup() {
     slm.start();
   }
 
-  in_setup = 0; // setup is done (succesfully)
+  in_setup = false; // setup is done (succesfully)
 }
 
 static long secs = 0;
