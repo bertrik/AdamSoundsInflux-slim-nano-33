@@ -48,7 +48,7 @@ size_t copyString(const String& input, char *dst, size_t max_size)
 
 String escapeJsonString(const String& input) {
   String output;
-  for (int i=0;i<input.length();i++) {
+  for (size_t i=0;i<input.length();i++) {
       char c = input.charAt(i);
       switch (c) {
           case '\\': output.concat("\\\\"); break;
