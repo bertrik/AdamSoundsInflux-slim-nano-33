@@ -32,7 +32,7 @@ public:
   {
     double total = 0;
 
-    for (int i = 0; i < filled; i++)
+    for (uint32_t i = 0; i < filled; i++)
     {
       total += buffer[i];
     }
