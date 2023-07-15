@@ -33,7 +33,7 @@ typedef struct {
     copyString(F("8883"), data.MQTT_PORT, 0); // nontls: 1883, tls: 8883
     copyString(F("sensor"), data.MQTT_USER, 0); 
     copyString(F("mqtt-password"), data.MQTT_PASS, 0);
-    sprintf(data.MQTT_TOPIC, "sensors/%s\0", data.DEVID  );
+    sprintf(data.MQTT_TOPIC, "sensors/%s", data.DEVID  );
     copyString(F("1"), data.SEND_SECS, 0);
   }
   int8_t indexOf(const char* name) {
