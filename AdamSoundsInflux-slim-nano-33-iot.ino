@@ -52,10 +52,9 @@ static int mqttConnectTry = 0;  // Count connection attempts
 #define JUMPER_OUT_PIN 12
 #define JUMPER_IN_PIN 11
 
-#define DISABLE_SERIAL 1
 #define AP_NAME "ASOKit"
 
-#if DISABLE_SERIAL
+#ifdef DISABLE_SERIAL
 #define Serial dummy
 #endif
 
@@ -275,7 +274,7 @@ void setup()
 {
 
     // Serial
-#if !DISABLE_SERIAL
+#ifndef DISABLE_SERIAL
     //Initialize serial and wait for port to open:
     Serial.begin(115200);
     while (!Serial && millis() < 5000);
